@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ขณะ · KHANA</title>
+<link href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:  #0A2D23;
+  --green2: #0d3829;
+  --gold:   #D4A843;
+  --gold2:  #C6A669;
+  --cream:  #E8D8B0;
+  --dim:    #5A7A6A;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--green);
+  min-height: 100vh;
+  min-height: 100svh;
+  font-family: 'Ancizar Serif', Georgia, serif;
+  color: var(--cream);
+  overflow-x: hidden;
+}
+
+#bg-canvas {
+  position: fixed; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none; z-index:0;
+}
+
+body::after {
+  content:''; position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity:0.5; pointer-events:none; z-index:1;
+}
+
+/* ── Page / Screen system ── */
+.screen {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  z-index: 2;
+  transition: transform 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease;
+}
+.screen.hidden {
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: clamp(40px,8vw,72px) clamp(16px,5vw,32px) clamp(60px,10vw,90px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Hero ── */
+.hero {
+  width:100%;
+  display:flex; flex-direction:column; align-items:center;
+  margin-bottom: clamp(24px,5vw,36px);
+  opacity:0; animation:fadeUp 1s ease forwards;
+}
+
+.bee-svg-wrap {
+  width:clamp(110px,28vw,150px);
+  height:clamp(110px,28vw,150px);
+  position:relative;
+  margin-bottom:clamp(18px,4vw,26px);
+}
+.bee-ring {
+  position:absolute; inset:0; border-radius:50%;
+  border:0.5px solid rgba(212,168,67,0.3);
+  animation:ringPulse 4s ease-in-out infinite;
+}
+.bee-ring-outer {
+  position:absolute; inset:-10px; border-radius:50%;
+  border:0.5px solid rgba(212,168,67,0.1);
+  animation:ringPulse 4s ease-in-out infinite 0.5s;
+}
+.bee-inner {
+  position:absolute; inset:6px; border-radius:50%;
+  background:radial-gradient(circle at 40% 35%, rgba(13,56,41,0.9), rgba(7,20,15,0.97));
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+}
+.bee-svg { width:60%; height:60%; }
+
+.brand-name {
+  font-size:clamp(28px,7vw,40px); font-weight:300;
+  color:var(--gold); letter-spacing:clamp(6px,2vw,12px);
+  line-height:1; text-align:center;
+}
+.brand-sub {
+  font-size:clamp(9px,2.2vw,12px); color:var(--gold2);
+  letter-spacing:clamp(5px,2vw,10px); margin-top:6px;
+  opacity:0.75; font-weight:300; text-align:center;
+}
+.tagline {
+  font-size:clamp(10px,2.5vw,13px); color:var(--dim);
+  letter-spacing:2px; margin-top:10px; font-style:italic; text-align:center;
+}
+
+/* ── Divider ── */
+.divider {
+  display:flex; align-items:center; gap:12px;
+  width:100%; margin-bottom:clamp(20px,4vw,30px);
+  opacity:0; animation:fadeUp 0.8s ease 0.25s forwards;
+}
+.divider-line { flex:1; height:0.5px; background:linear-gradient(90deg,transparent,rgba(212,168,67,0.35),transparent); }
+.divider-ornament { color:var(--gold); font-size:10px; opacity:0.55; letter-spacing:6px; }
+
+/* ── Hex strip ── */
+.hex-strip {
+  width:100%; display:flex; justify-content:center; gap:8px;
+  margin-bottom:clamp(18px,4vw,28px);
+  opacity:0; animation:fadeUp 0.8s ease 0.35s forwards;
+}
+.hex {
+  width:22px; height:25px;
+  background:rgba(212,168,67,0.07);
+  border:0.5px solid rgba(212,168,67,0.18);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  transition:all 0.3s;
+}
+.hex:hover { background:rgba(212,168,67,0.18); }
+.hex.gold  { background:rgba(212,168,67,0.15); border-color:rgba(212,168,67,0.4); }
+
+/* ── Links ── */
+.links {
+  width:100%; display:flex; flex-direction:column;
+  gap:clamp(10px,2.5vw,14px);
+}
+.link-item { opacity:0; animation:fadeUp 0.65s ease forwards; }
+.link-item:nth-child(1){animation-delay:0.4s;}
+.link-item:nth-child(2){animation-delay:0.5s;}
+
+.link-btn {
+  display:flex; align-items:center;
+  gap:clamp(12px,3vw,16px);
+  width:100%;
+  padding:clamp(12px,3vw,16px) clamp(14px,3.5vw,20px);
+  background:rgba(7,25,18,0.55);
+  border:0.5px solid rgba(212,168,67,0.2);
+  border-radius:12px;
+  color:var(--cream);
+  text-decoration:none;
+  font-family:'Ancizar Serif',Georgia,serif;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  position:relative; overflow:hidden;
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  min-height:64px;
+  -webkit-tap-highlight-color:rgba(212,168,67,0.1);
+}
+.link-btn::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(105deg,transparent 40%,rgba(212,168,67,0.07) 50%,transparent 60%);
+  transform:translateX(-100%); transition:transform 0.6s ease;
+}
+.link-btn:hover::before,.link-btn:active::before{transform:translateX(100%);}
+.link-btn::after {
+  content:''; position:absolute;
+  left:0; top:20%; bottom:20%; width:2px;
+  background:var(--gold); border-radius:2px;
+  opacity:0; transition:opacity 0.3s;
+}
+.link-btn:hover::after,.link-btn:active::after{opacity:1;}
+.link-btn:hover {
+  border-color:rgba(212,168,67,0.5);
+  background:rgba(10,35,26,0.85);
+  transform:translateY(-2px);
+  box-shadow:0 10px 28px rgba(0,0,0,0.35),0 0 0 0.5px rgba(212,168,67,0.15);
+}
+.link-btn:active{transform:translateY(0);}
+
+.link-icon {
+  width:clamp(38px,9vw,44px); height:clamp(38px,9vw,44px);
+  border-radius:10px;
+  background:rgba(212,168,67,0.08); border:0.5px solid rgba(212,168,67,0.22);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; transition:all 0.3s;
+  font-size:clamp(16px,4vw,20px);
+}
+.link-btn:hover .link-icon { background:rgba(212,168,67,0.18); border-color:rgba(212,168,67,0.5); }
+
+.link-text { display:flex; flex-direction:column; gap:3px; flex:1; min-width:0; }
+.link-title {
+  color:var(--cream); font-size:clamp(13px,3.2vw,15px);
+  font-weight:400; letter-spacing:0.5px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.link-sub {
+  color:var(--dim); font-size:clamp(9px,2.2vw,11px);
+  font-weight:300; letter-spacing:0.3px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.link-arrow { color:rgba(212,168,67,0.3); font-size:14px; flex-shrink:0; transition:all 0.3s; }
+.link-btn:hover .link-arrow { color:var(--gold); transform:translateX(4px); }
+
+/* ── Bottom + Footer ── */
+.bottom-bees {
+  margin-top:clamp(28px,6vw,40px);
+  opacity:0; animation:fadeUp 0.8s ease 0.7s forwards;
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+}
+.footer { text-align:center; }
+.footer-divider { display:flex; align-items:center; gap:10px; width:160px; margin:0 auto 14px; }
+.footer-divider span { flex:1; height:0.5px; background:rgba(212,168,67,0.2); }
+.footer-star { color:var(--gold); opacity:0.4; font-size:8px; }
+.footer-text { font-size:clamp(8px,2vw,10px); color:var(--dim); letter-spacing:2px; font-weight:300; }
+
+/* ════════════════════════════════════
+   OUR STORY SCREEN
+════════════════════════════════════ */
+.story-page {
+  width:100%; max-width:600px; margin:0 auto;
+  padding:clamp(24px,5vw,48px) clamp(16px,5vw,32px) clamp(60px,10vw,90px);
+}
+
+/* Back button */
+.back-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  background:transparent; border:0.5px solid rgba(212,168,67,0.25);
+  border-radius:8px; padding:8px 16px;
+  color:var(--gold2); font-family:'Ancizar Serif',Georgia,serif;
+  font-size:13px; letter-spacing:1px; cursor:pointer;
+  transition:all 0.3s; margin-bottom:clamp(28px,5vw,40px);
+  -webkit-tap-highlight-color:transparent;
+}
+.back-btn:hover { border-color:rgba(212,168,67,0.6); color:var(--gold); }
+
+/* Story header */
+.story-header {
+  display:flex; flex-direction:column; align-items:center;
+  margin-bottom:clamp(28px,5vw,40px);
+  opacity:0; animation:fadeUp 0.8s ease 0.1s forwards;
+}
+.story-bee {
+  margin-bottom:16px;
+}
+.story-title {
+  font-size:clamp(26px,6vw,36px); font-weight:300;
+  color:var(--gold); letter-spacing:4px; text-align:center; line-height:1.2;
+}
+.story-subtitle {
+  font-size:clamp(10px,2.5vw,13px); color:var(--dim);
+  letter-spacing:3px; margin-top:8px; font-style:italic; text-align:center;
+}
+
+/* Section blocks */
+.story-section {
+  margin-bottom:clamp(28px,5vw,36px);
+  opacity:0; animation:fadeUp 0.7s ease forwards;
+}
+.story-section:nth-child(1){animation-delay:0.2s;}
+.story-section:nth-child(2){animation-delay:0.3s;}
+.story-section:nth-child(3){animation-delay:0.4s;}
+.story-section:nth-child(4){animation-delay:0.5s;}
+.story-section:nth-child(5){animation-delay:0.6s;}
+
+.section-label {
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:12px;
+}
+.section-icon {
+  width:32px; height:32px; border-radius:8px;
+  background:rgba(212,168,67,0.1); border:0.5px solid rgba(212,168,67,0.25);
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; flex-shrink:0;
+}
+.section-title {
+  font-size:clamp(13px,3vw,15px); color:var(--gold);
+  letter-spacing:1px; font-weight:400;
+}
+
+.story-text {
+  font-size:clamp(13px,3.2vw,15px); color:var(--cream);
+  line-height:1.9; font-weight:300; letter-spacing:0.3px;
+}
+.story-text em { color:var(--gold); font-style:italic; }
+
+/* Feature cards */
+.feature-cards {
+  display:flex; flex-direction:column; gap:10px; margin-top:4px;
+}
+.feature-card {
+  background:rgba(7,25,18,0.6);
+  border:0.5px solid rgba(212,168,67,0.18);
+  border-radius:10px; padding:14px 16px;
+  backdrop-filter:blur(4px);
+}
+.feature-card-title {
+  font-size:clamp(12px,2.8vw,14px); color:var(--gold);
+  letter-spacing:0.5px; margin-bottom:6px; font-weight:400;
+}
+.feature-card-text {
+  font-size:clamp(11px,2.6vw,13px); color:var(--cream);
+  line-height:1.8; font-weight:300; opacity:0.85;
+}
+
+/* Quote block */
+.story-quote {
+  border-left:2px solid rgba(212,168,67,0.4);
+  padding:12px 0 12px 18px;
+  margin:4px 0;
+}
+.story-quote p {
+  font-size:clamp(14px,3.5vw,17px); color:var(--cream);
+  line-height:1.9; font-style:italic; font-weight:300;
+}
+.story-quote span {
+  display:block; margin-top:8px;
+  font-size:11px; color:var(--dim); letter-spacing:1px;
+}
+
+/* Purpose list */
+.purpose-list { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+.purpose-item {
+  display:flex; gap:12px; align-items:flex-start;
+  background:rgba(7,25,18,0.5);
+  border:0.5px solid rgba(212,168,67,0.12);
+  border-radius:8px; padding:12px 14px;
+}
+.purpose-dot {
+  width:24px; height:24px; border-radius:6px;
+  background:rgba(212,168,67,0.12); border:0.5px solid rgba(212,168,67,0.3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; flex-shrink:0; margin-top:1px;
+}
+.purpose-text { font-size:clamp(11px,2.6vw,13px); color:var(--cream); line-height:1.8; font-weight:300; }
+.purpose-text strong { color:var(--gold2); font-weight:400; }
+
+/* Story footer */
+.story-footer-section {
+  margin-top:clamp(32px,6vw,48px);
+  opacity:0; animation:fadeUp 0.7s ease 0.7s forwards;
+  display:flex; flex-direction:column; align-items:center; gap:14px;
+  text-align:center;
+}
+.story-footer-title { font-size:clamp(10px,2.5vw,12px); color:var(--dim); letter-spacing:3px; }
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes ringPulse {
+  0%,100%{opacity:0.5;transform:scale(1);}
+  50%{opacity:1;transform:scale(1.03);}
+}
+@keyframes beeFly {
+  0%,100%{transform:translate(0,0) rotate(-5deg);}
+  25%{transform:translate(4px,-5px) rotate(2deg);}
+  50%{transform:translate(-3px,-8px) rotate(-3deg);}
+  75%{transform:translate(5px,-3px) rotate(4deg);}
+}
+@keyframes wingFlap {
+  0%,100%{transform:scaleX(1);}
+  50%{transform:scaleX(0.7);}
+}
+
+@media(max-width:380px){
+  .hex{width:18px;height:20px;}
+  .hex-strip{gap:5px;}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- ════ SCREEN 1: MAIN ════ -->
+<div class="screen" id="screen-main">
+<div class="page">
+
+  <div class="hero">
+    <div class="bee-svg-wrap">
+      <div class="bee-ring"></div>
+      <div class="bee-ring-outer"></div>
+      <div class="bee-inner">
+        <svg class="bee-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="animation:beeFly 5s ease-in-out infinite;">
+          <ellipse cx="28" cy="28" rx="18" ry="10" fill="rgba(212,168,67,0.22)" stroke="rgba(212,168,67,0.5)" stroke-width="0.5" style="transform-origin:36px 34px;animation:wingFlap 0.3s ease-in-out infinite;"/>
+          <ellipse cx="52" cy="28" rx="18" ry="10" fill="rgba(212,168,67,0.22)" stroke="rgba(212,168,67,0.5)" stroke-width="0.5" style="transform-origin:44px 34px;animation:wingFlap 0.3s ease-in-out infinite 0.15s;"/>
+          <ellipse cx="40" cy="44" rx="11" ry="16" fill="#D4A843"/>
+          <rect x="29.5" y="40" width="21" height="4" rx="2" fill="#0A2D23" opacity="0.6"/>
+          <rect x="29.5" y="47" width="21" height="4" rx="2" fill="#0A2D23" opacity="0.6"/>
+          <circle cx="40" cy="27" r="8" fill="#D4A843"/>
+          <circle cx="37" cy="26" r="2" fill="#0A2D23"/>
+          <circle cx="43" cy="26" r="2" fill="#0A2D23"/>
+          <line x1="37" y1="20" x2="32" y2="13" stroke="#D4A843" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="31" cy="12" r="2" fill="#D4A843"/>
+          <line x1="43" y1="20" x2="48" y2="13" stroke="#D4A843" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="49" cy="12" r="2" fill="#D4A843"/>
+          <path d="M40 60 L37 67 L40 65 L43 67 Z" fill="#C6A669"/>
+          <text x="58" y="22" font-size="8" fill="rgba(212,168,67,0.6)">✦</text>
+          <text x="12" y="38" font-size="6" fill="rgba(212,168,67,0.4)">✦</text>
+        </svg>
+      </div>
+    </div>
+    <div class="brand-name">ขณะ</div>
+    <div class="brand-sub">K H A N A</div>
+    <div class="tagline">เก็บในขณะที่พร้อม</div>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-ornament">✦ ✦ ✦</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="hex-strip" aria-hidden="true">
+    <div class="hex"></div><div class="hex gold"></div>
+    <div class="hex"></div><div class="hex gold"></div>
+    <div class="hex"></div><div class="hex gold"></div>
+    <div class="hex"></div><div class="hex gold"></div>
+    <div class="hex"></div>
+  </div>
+
+  <div class="links">
+
+    <div class="link-item">
+      <a href="https://lin.ee/WtDLn9H" class="link-btn" target="_blank" rel="noopener noreferrer">
+        <div class="link-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C6.48 2 2 6.03 2 11c0 2.76 1.3 5.24 3.37 6.93L4.5 22l4.32-2.16C9.84 20.27 10.9 20.4 12 20.4c5.52 0 10-4.03 10-9s-4.48-9-10-9z" fill="rgba(212,168,67,0.9)"/>
+          </svg>
+        </div>
+        <div class="link-text">
+          <span class="link-title">Line Official</span>
+          <span class="link-sub">สั่งซื้อ · สอบถาม · ติดตามข่าวสาร</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="link-item">
+      <a href="#" class="link-btn" id="btn-story" onclick="goStory(event)">
+        <div class="link-icon">
+          <svg width="20" height="20" viewBox="0 0 80 80" fill="none">
+            <ellipse cx="40" cy="44" rx="11" ry="16" fill="#D4A843"/>
+            <rect x="29.5" y="40" width="21" height="4" rx="2" fill="#0A2D23" opacity="0.6"/>
+            <rect x="29.5" y="47" width="21" height="4" rx="2" fill="#0A2D23" opacity="0.6"/>
+            <circle cx="40" cy="27" r="8" fill="#D4A843"/>
+            <circle cx="37" cy="26" r="1.8" fill="#0A2D23"/>
+            <circle cx="43" cy="26" r="1.8" fill="#0A2D23"/>
+            <line x1="37" y1="20" x2="33" y2="14" stroke="#D4A843" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="32" cy="13" r="2" fill="#D4A843"/>
+            <line x1="43" y1="20" x2="47" y2="14" stroke="#D4A843" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="48" cy="13" r="2" fill="#D4A843"/>
+          </svg>
+        </div>
+        <div class="link-text">
+          <span class="link-title">Our Story</span>
+          <span class="link-sub">น้ำผึ้งเดือน ๕ · พะเยา · ปีละครั้ง</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="bottom-bees">
+    <svg width="200" height="40" viewBox="0 0 200 40" fill="none" aria-hidden="true">
+      <path d="M50 25 Q80 5 120 20 Q150 32 180 15" stroke="rgba(212,168,67,0.12)" stroke-width="1" stroke-dasharray="3,5" fill="none"/>
+      <text x="88" y="14" font-size="7" fill="rgba(212,168,67,0.35)">✦</text>
+      <text x="140" y="26" font-size="5" fill="rgba(212,168,67,0.25)">✦</text>
+      <g style="animation:beeFly 6s ease-in-out infinite;" transform="translate(20,10)">
+        <ellipse cx="0" cy="-4" rx="8" ry="5" fill="rgba(212,168,67,0.15)" stroke="rgba(212,168,67,0.3)" stroke-width="0.5"/>
+        <ellipse cx="12" cy="-4" rx="8" ry="5" fill="rgba(212,168,67,0.15)" stroke="rgba(212,168,67,0.3)" stroke-width="0.5"/>
+        <ellipse cx="6" cy="3" rx="6" ry="9" fill="rgba(212,168,67,0.7)"/>
+        <circle cx="6" cy="-5" r="4" fill="rgba(212,168,67,0.8)"/>
+      </g>
+    </svg>
+    <div class="footer">
+      <div class="footer-divider"><span></span><span class="footer-star">✦</span><span></span></div>
+      <div class="footer-text">น้ำผึ้งเดือน ๕ · พะเยา · KHANA</div>
+    </div>
+  </div>
+
+</div>
+</div><!-- end screen-main -->
+
+
+<!-- ════ SCREEN 2: OUR STORY ════ -->
+<div class="screen hidden" id="screen-story">
+<div class="story-page">
+
+  <button class="back-btn" onclick="goBack()">← กลับ</button>
+
+  <div class="story-header">
+    <div class="story-bee" aria-hidden="true">
+      <svg width="56" height="56" viewBox="0 0 80 80" fill="none" style="animation:beeFly 5s ease-in-out infinite;">
+        <ellipse cx="28" cy="28" rx="18" ry="10" fill="rgba(212,168,67,0.22)" stroke="rgba(212,168,67,0.5)" stroke-width="0.5" style="transform-origin:36px 34px;animation:wingFlap 0.3s ease-in-out infinite;"/>
+        <ellipse cx="52" cy="28" rx="18" ry="10" fill="rgba(212,168,67,0.22)" stroke="rgba(212,168,67,0.5)" stroke-width="0.5" style="transform-origin:44px 34px;animation:wingFlap 0.3s ease-in-out infinite 0.15s;"/>
+        <ellipse cx="40" cy="44" rx="11" ry="16" fill="#D4A843"/>
+        <rect x="29.5" y="40" width="21" height="4" rx="2" fill="#0A2D23" opacity="0.6"/>
+        <rect x="29.5" y="47" width="21" height="4" rx="2" fill="#0A2D23" opacity="0.6"/>
+        <circle cx="40" cy="27" r="8" fill="#D4A843"/>
+        <circle cx="37" cy="26" r="2" fill="#0A2D23"/>
+        <circle cx="43" cy="26" r="2" fill="#0A2D23"/>
+        <line x1="37" y1="20" x2="32" y2="13" stroke="#D4A843" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="31" cy="12" r="2" fill="#D4A843"/>
+        <line x1="43" y1="20" x2="48" y2="13" stroke="#D4A843" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="49" cy="12" r="2" fill="#D4A843"/>
+        <path d="M40 60 L37 67 L40 65 L43 67 Z" fill="#C6A669"/>
+      </svg>
+    </div>
+    <div class="story-title">Our Story</div>
+    <div class="story-subtitle">ขณะ · KHANA · พะเยา</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:0;">
+
+    <!-- Origin story -->
+    <div class="story-section">
+      <div class="story-quote">
+        <p>ขณะหนึ่ง ผมหลงรักพะเยา<br>หลงรักสายหมอกยามเช้า อากาศที่หายใจแล้วรู้สึกมีชีวิต และคนที่นั่น<br><br><em>ขณะ</em> เกิดขึ้นจากความรักนั้น</p>
+        <span>— เรื่องราวของผู้ก่อตั้ง</span>
+      </div>
+    </div>
+
+    <!-- What is Khana -->
+    <div class="story-section">
+      <div class="section-label">
+        <div class="section-icon">🍯</div>
+        <span class="section-title">ขณะ คืออะไร</span>
+      </div>
+      <p class="story-text">
+        <em>ขณะ</em> แปลว่า ช่วงเวลา หรือ ชั่วขณะหนึ่ง — สะท้อนความเชื่อที่ว่าของดีต้องใช้เวลา และต้องรอให้ถึง<em>ขณะที่ใช่</em> เราไม่รีบ ไม่เร่ง เราเก็บน้ำผึ้งตามจังหวะของธรรมชาติ เพราะเราต้องการอยู่ร่วมกับธรรมชาติ ไม่ใช่แค่เอาจากธรรมชาติ
+      </p>
+    </div>
+
+    <!-- จุดเด่น -->
+    <div class="story-section">
+      <div class="section-label">
+        <div class="section-icon">✦</div>
+        <span class="section-title">สิ่งที่ทำให้ขณะแตกต่าง</span>
+      </div>
+      <div class="feature-cards">
+        <div class="feature-card">
+          <div class="feature-card-title">🌿 น้ำผึ้งเดือน ๕ · เก็บปีละครั้ง</div>
+          <div class="feature-card-text">เราเก็บน้ำผึ้งเพียงปีละครั้งในเดือนเมษายน ช่วงที่ความร้อนสูงสุดของปี ธรรมชาติกำหนดเวลาให้เอง ผึ้งสะสมมาเต็มที่แล้ว เราจึงค่อยเก็บ ไม่รบกวนรังบ่อยเกินไป</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card-title">💧 เข้มข้น สะอาด ด้วยวิธีธรรมชาติ</div>
+          <div class="feature-card-text">เราไม่บีบ ไม่เหวี่ยงรัง แต่ปล่อยให้น้ำผึ้งหยดลงมาเองตามแรงโน้มถ่วง ความชื้นระเหยออกไประหว่างนั้น ผลลัพธ์คือน้ำผึ้งที่เข้มข้นและสะอาดกว่าวิธีอุตสาหกรรม</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card-title">🏔 จากพะเยา ชุมชนล้านนา</div>
+          <div class="feature-card-text">น้ำผึ้งมาจากสวนของชุมชนในพะเยา ท่ามกลางวัฒนธรรมล้านนาที่อบอุ่น รายได้กลับสู่ครอบครัวและชุมชนโดยตรง คุณได้ของดี ชุมชนได้ชีวิตที่ดีขึ้น</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card-title">🌱 ตามฤดูกาล ไม่ฝืนธรรมชาติ</div>
+          <div class="feature-card-text">ช่วงที่ไม่มีน้ำผึ้ง เราจะแนะนำผลิตภัณฑ์เกษตรตามฤดูกาลอื่นจากชุมชนเดียวกัน เพราะเราเชื่อว่าธุรกิจที่ดีต้องเดินตามจังหวะของธรรมชาติ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Higher purpose -->
+    <div class="story-section">
+      <div class="section-label">
+        <div class="section-icon">🌍</div>
+        <span class="section-title">ทำไมเราทำสิ่งนี้</span>
+      </div>
+      <div class="purpose-list">
+        <div class="purpose-item">
+          <div class="purpose-dot">🧡</div>
+          <div class="purpose-text"><strong>ผู้บริโภค</strong> ได้น้ำผึ้งคุณภาพดีกว่าท้องตลาด มาจากความตั้งใจและความภาคภูมิใจของคนท้องถิ่น</div>
+        </div>
+        <div class="purpose-item">
+          <div class="purpose-dot">🏡</div>
+          <div class="purpose-text"><strong>ชุมชนพะเยา</strong> มีรายได้ที่ดีขึ้น จากทรัพยากรที่มีอยู่แล้วในท้องถิ่น เริ่มจากครอบครัวที่เราไว้ใจ</div>
+        </div>
+        <div class="purpose-item">
+          <div class="purpose-dot">🌿</div>
+          <div class="purpose-text"><strong>ธรรมชาติ</strong> เราเก็บเพียงปีละครั้ง ไม่ทำลายรัง ไม่ใช้สารเคมี อยู่ร่วมกับธรรมชาติในแบบที่ควรจะเป็น</div>
+        </div>
+        <div class="purpose-item">
+          <div class="purpose-dot">✨</div>
+          <div class="purpose-text"><strong>ความสุขในการทำ</strong> ได้นำของดีคุณภาพสูงส่งถึงมือคน เห็นรอยยิ้มของทั้งผู้ซื้อและชุมชน คือความหมายของ ขณะ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Closing quote -->
+    <div class="story-section">
+      <div class="story-quote">
+        <p>เราเก็บน้ำผึ้งปีละครั้ง ในเดือนเมษายน เมื่อธรรมชาติพร้อม<br>ปล่อยให้หยดลงมาเองตามแรงโน้มถ่วง<br>ไม่เร่ง ไม่บีบ ไม่บังคับ<br><br>เพราะของดี <em>ต้องรอให้ถึงขณะที่ใช่</em></p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="story-footer-section">
+    <div class="divider" style="opacity:1;animation:none;">
+      <div class="divider-line"></div>
+      <span class="divider-ornament">✦</span>
+      <div class="divider-line"></div>
+    </div>
+    <div class="story-footer-title">สนใจสั่งซื้อหรือสอบถาม</div>
+    <a href="https://lin.ee/WtDLn9H" class="link-btn" target="_blank" rel="noopener noreferrer" style="max-width:320px;">
+      <div class="link-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C6.48 2 2 6.03 2 11c0 2.76 1.3 5.24 3.37 6.93L4.5 22l4.32-2.16C9.84 20.27 10.9 20.4 12 20.4c5.52 0 10-4.03 10-9s-4.48-9-10-9z" fill="rgba(212,168,67,0.9)"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <span class="link-title">Line Official</span>
+        <span class="link-sub">สั่งซื้อ · สอบถาม · ติดตามข่าวสาร</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+    <div class="footer" style="margin-top:8px;">
+      <div class="footer-divider"><span></span><span class="footer-star">✦</span><span></span></div>
+      <div class="footer-text">น้ำผึ้งเดือน ๕ · พะเยา · KHANA</div>
+    </div>
+  </div>
+
+</div>
+</div><!-- end screen-story -->
+
+<script>
+// ── Screen navigation ──
+function goStory(e) {
+  e.preventDefault();
+  document.getElementById('screen-story').classList.remove('hidden');
+  document.getElementById('screen-story').scrollTop = 0;
+  document.getElementById('screen-main').classList.add('hidden');
+}
+function goBack() {
+  document.getElementById('screen-main').classList.remove('hidden');
+  document.getElementById('screen-story').classList.add('hidden');
+  document.getElementById('screen-main').scrollTop = 0;
+}
+
+// ── Background canvas ──
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+resize();
+window.addEventListener('resize',()=>{ resize(); init(); });
+
+const GOLD='rgba(212,168,67,';
+let particles=[];
+function rand(a,b){return a+Math.random()*(b-a);}
+
+function init(){
+  particles=[];
+  const W=canvas.width,H=canvas.height;
+  for(let i=0;i<90;i++){
+    particles.push({type:'star',x:Math.random()*W,y:Math.random()*H,
+      size:rand(0.4,2.2),opacity:rand(0.05,0.45),speed:rand(0.002,0.01),
+      phase:Math.random()*Math.PI*2,is4star:Math.random()>0.65,rot:Math.random()*Math.PI});
+  }
+  for(let i=0;i<10;i++){
+    particles.push({type:'hex',x:Math.random()*W,y:Math.random()*H,
+      size:rand(12,32),opacity:rand(0.02,0.07),
+      vy:rand(-0.12,-0.04),vx:rand(-0.04,0.04),
+      rot:Math.random()*Math.PI*2,rotSpeed:rand(-0.002,0.002)});
+  }
+}
+
+function drawHex(x,y,r,rot){
+  ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.beginPath();
+  for(let i=0;i<6;i++){const a=(i/6)*Math.PI*2-Math.PI/6;
+    i===0?ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r):ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);}
+  ctx.closePath();ctx.stroke();ctx.restore();
+}
+function draw4Star(x,y,r,rot){
+  ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.beginPath();
+  for(let i=0;i<4;i++){const a=(i/4)*Math.PI*2;
+    ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
+    const am=((i+0.5)/4)*Math.PI*2;
+    ctx.lineTo(Math.cos(am)*r*0.2,Math.sin(am)*r*0.2);}
+  ctx.closePath();ctx.fill();ctx.restore();
+}
+
+function draw(t){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const W=canvas.width,H=canvas.height;
+  particles.forEach(p=>{
+    if(p.type==='star'){
+      const pulse=(Math.sin(t*p.speed*60+p.phase)+1)/2;
+      const alpha=p.opacity*(0.35+0.65*pulse);
+      ctx.fillStyle=GOLD+alpha+')';
+      if(p.is4star&&p.size>1) draw4Star(p.x,p.y,p.size*2,p.rot+t*p.speed*0.4);
+      else{ctx.beginPath();ctx.arc(p.x,p.y,p.size*0.6,0,Math.PI*2);ctx.fill();}
+    } else {
+      p.x+=p.vx;p.y+=p.vy;p.rot+=p.rotSpeed;
+      if(p.y+p.size<0){p.y=H+p.size;p.x=Math.random()*W;}
+      if(p.x<-p.size)p.x=W+p.size;
+      if(p.x>W+p.size)p.x=-p.size;
+      ctx.strokeStyle=GOLD+p.opacity+')';ctx.lineWidth=0.5;
+      drawHex(p.x,p.y,p.size,p.rot);
+    }
+  });
+  requestAnimationFrame(draw);
+}
+init();
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>
