@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เรื่องราว · ขณะ KHANA</title>
+<meta name="description" content="เรื่องราวของขณะ — ความรักในพะเยา และน้ำผึ้งที่เก็บตามจังหวะของธรรมชาติ">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Trirong:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Charmonman:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="khana.css?v=7">
+<script>(function(){try{var l=localStorage.getItem('khana-lang')||'th';document.documentElement.classList.add('lang-'+l);document.documentElement.lang=l;}catch(e){document.documentElement.classList.add('lang-th');}var _d=document.documentElement;_d.setAttribute('data-warmth','crafted');_d.setAttribute('data-voice','modern');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){_d.className+=' pre';}})();</script>
+<script src="image-slot.js"></script>
+</head>
+<body>
+
+<!-- ───────────── Nav ───────────── -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="brand" href="index.html" aria-label="ขณะ KHANA">
+      <span class="brand__th">ขณะ</span>
+      <span class="brand__en">KHANA</span>
+      <span class="brand__spark" aria-hidden="true">✦</span>
+    </a>
+
+    <nav class="nav__links" aria-label="เมนูหลัก">
+      <a class="nav__link" href="index.html"><span data-l="th">หน้าแรก</span><span data-l="en">Home</span></a>
+      <a class="nav__link" href="story.html" aria-current="page"><span data-l="th">เรื่องราว</span><span data-l="en">Story</span></a>
+      <a class="nav__link" href="buy.html"><span data-l="th">สั่งซื้อ</span><span data-l="en">Shop</span></a>
+      <a class="nav__link" href="faq.html"><span data-l="th">คำถามที่พบบ่อย</span><span data-l="en">FAQ</span></a>
+      <a class="nav__cta nav__cta--drawer" href="https://lin.ee/WtDLn9H" target="_blank" rel="noopener noreferrer">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.63V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+        LINE
+      </a>
+    </nav>
+
+    <div class="nav__right">
+      <div class="langtog" role="group" aria-label="เลือกภาษา / Language">
+        <button class="langtog__btn" type="button" data-setlang="th" aria-pressed="true">ไทย</button>
+        <button class="langtog__btn" type="button" data-setlang="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="nav__cta nav__cta--bar" href="https://lin.ee/WtDLn9H" target="_blank" rel="noopener noreferrer">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.63V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+        LINE
+      </a>
+      <button class="nav__toggle" type="button" aria-label="เมนู / Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ───────────── Header ───────────── -->
+<section class="section--tight story-head">
+  <div class="wrap story-head__inner">
+    <p class="kicker reveal"><span data-l="th">เรื่องราวของเรา</span><span data-l="en">Our story</span></p>
+    <h1 class="story-head__title display reveal d1"><span data-l="th">เริ่มจาก<br>ความรักในพะเยา</span><span data-l="en">It began with<br>a love for Phayao</span></h1>
+    <p class="story-head__sub reveal d2"><span data-l="th">เริ่มจากความรักในพะเยา — สายหมอกยามเช้า อากาศที่หายใจแล้วรู้สึกมีชีวิต และผู้คนทางเหนือ</span><span data-l="en">It began with a love for Phayao — the morning mist, air that feels alive, and the people of the north.</span></p>
+  </div>
+</section>
+
+<!-- ───────────── Founder quote ───────────── -->
+<section class="section--tight founder">
+  <div class="wrap founder__grid">
+    <div class="founder__media reveal">
+      <image-slot id="story-founder" shape="rounded" radius="18"
+        placeholder="ภาพผู้ก่อตั้ง — the founder"></image-slot>
+      <p class="photo-cap"><span data-l="th">ผู้ก่อตั้ง · ขณะ</span><span data-l="en">The founder · KHANA</span></p>
+    </div>
+    <blockquote class="founder__quote reveal d1">
+      <p class="founder__th lede"><span data-l="th">“ขณะหนึ่ง ผมหลงรักพะเยา หลงรักสายหมอกยามเช้า อากาศที่หายใจแล้วรู้สึกมีชีวิต และคนที่นั่น”</span><span data-l="en">“There was a moment I fell in love with Phayao — the mist, the air that made me feel alive, and the people. <em>Khana</em> grew out of that love.”</span></p>
+      <cite class="founder__cite"><span data-l="th">— เรื่องราวของผู้ก่อตั้ง</span><span data-l="en">— From the founder</span></cite>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ───────────── Meaning ───────────── -->
+<section class="section--tight prose-section">
+  <div class="wrap prose">
+    <p class="kicker reveal"><span data-l="th">ขณะ คืออะไร</span><span data-l="en">The meaning</span></p>
+    <h2 class="prose__h reveal d1"><span data-l="th"><em>ขณะ</em> แปลว่า ช่วงเวลา หรือชั่วขณะหนึ่ง</span><span data-l="en"><em>Khana</em> means a moment — a passing instant.</span></h2>
+    <p class="prose__p reveal d1"><span data-l="th">สะท้อนความเชื่อที่ว่าของดีต้องใช้เวลา และต้องรอให้ถึง<em>ขณะที่ใช่</em> เราไม่รีบ ไม่เร่ง เราเก็บน้ำผึ้งตามจังหวะของธรรมชาติ เพราะเราต้องการอยู่ร่วมกับธรรมชาติ ไม่ใช่แค่เอาจากธรรมชาติ</span><span data-l="en">It reflects a simple belief: good things take time, and must wait for the <em>right moment</em>. We don’t rush. We gather honey to nature’s rhythm — because we want to live with the land, not only take from it.</span></p>
+  </div>
+</section>
+
+<!-- ───────────── Wide image ───────────── -->
+<section class="wrap story-wide reveal">
+  <image-slot id="story-phayao" shape="rounded" radius="20"
+    placeholder="ภาพพะเยา / สวนผึ้ง — Phayao landscape or the apiary"></image-slot>
+  <p class="photo-cap"><span data-l="th">พะเยา · ล้านนา — บ้านของน้ำผึ้งเดือน ๕</span><span data-l="en">Phayao · Lanna — home of month-five honey</span></p>
+</section>
+
+<!-- ───────────── Why we do this ───────────── -->
+<section class="section why">
+  <div class="wrap">
+    <div class="why__head reveal">
+      <p class="kicker"><span data-l="th">ทำไมเราทำสิ่งนี้</span><span data-l="en">Why we do it</span></p>
+      <h2 class="why__title display"><span data-l="th">ความหมายของขณะ<br>คือสิ่งที่อยู่เบื้องหลัง</span><span data-l="en">The meaning of Khana<br>is what stands behind it</span></h2>
+    </div>
+    <div class="why__grid">
+      <article class="why__item reveal">
+        <span class="why__label"><span data-l="th">ผู้บริโภค</span><span data-l="en">For you</span></span>
+        <p class="why__text"><span data-l="th">ได้น้ำผึ้งคุณภาพดีกว่าท้องตลาด มาจากความตั้งใจและความภาคภูมิใจของคนท้องถิ่น</span><span data-l="en">Honey of a quality beyond the market average — made with the care and pride of local people.</span></p>
+      </article>
+      <article class="why__item reveal d1">
+        <span class="why__label"><span data-l="th">ชุมชนพะเยา</span><span data-l="en">For Phayao</span></span>
+        <p class="why__text"><span data-l="th">มีรายได้ที่ดีขึ้นจากทรัพยากรที่มีอยู่แล้วในท้องถิ่น เริ่มจากครอบครัวที่เราไว้ใจ</span><span data-l="en">Better income from resources the community already has — starting with families we trust.</span></p>
+      </article>
+      <article class="why__item reveal">
+        <span class="why__label"><span data-l="th">ธรรมชาติ</span><span data-l="en">For the land</span></span>
+        <p class="why__text"><span data-l="th">เราเก็บเพียงปีละครั้ง ไม่ทำลายรัง ไม่ใช้สารเคมี อยู่ร่วมกับธรรมชาติในแบบที่ควรจะเป็น</span><span data-l="en">We harvest just once a year, never destroy the hive, use no chemicals — living with nature the way it should be.</span></p>
+      </article>
+      <article class="why__item reveal d1">
+        <span class="why__label"><span data-l="th">ความสุขในการทำ</span><span data-l="en">For the joy</span></span>
+        <p class="why__text"><span data-l="th">ได้นำของดีคุณภาพสูงส่งถึงมือคน เห็นรอยยิ้มของทั้งผู้ซื้อและชุมชน คือความหมายของขณะ</span><span data-l="en">Bringing something genuinely good to people, seeing the smiles of buyers and community alike — that is what Khana means.</span></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── Closing poem (dark) ───────────── -->
+<section class="dark section poem">
+  <div class="wrap poem__inner">
+    <p class="kicker kicker--light reveal"><span data-l="th">เพราะของดี ต้องรอ</span><span data-l="en">Good things wait</span></p>
+    <p class="poem__lines display reveal d1"><span data-l="th">เราเก็บน้ำผึ้ง<br>ปีละครั้งเท่านั้น</span><span data-l="en">We gather honey<br>only once a year</span></p>
+    <p class="poem__sub lede reveal d2"><span data-l="th">ในเดือนเมษายน เมื่อธรรมชาติพร้อม ปล่อยให้หยดลงมาเองตามแรงโน้มถ่วง</span><span data-l="en">In April, when nature is ready — we let it fall, drop by drop, on its own.</span></p>
+  </div>
+</section>
+
+<!-- ───────────── CTA ───────────── -->
+<section class="section--tight cta">
+  <div class="wrap cta__inner reveal">
+    <h2 class="cta__title display"><span data-l="th">อยากลองน้ำผึ้งของเราไหม</span><span data-l="en">Would you like to try our honey?</span></h2>
+    <p class="cta__en"><span data-l="th">ทักเราทาง LINE เพื่อสั่งซื้อ สอบถาม หรือติดตามฤดูเก็บถัดไป</span><span data-l="en">Reach us on LINE to order, ask anything, or follow the next harvest.</span></p>
+    <div class="cta__btns">
+      <a class="btn btn--line" href="https://lin.ee/WtDLn9H" target="_blank" rel="noopener noreferrer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.63V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+        <span data-l="th">สั่งซื้อ · สอบถามทาง LINE</span><span data-l="en">Order · ask on LINE</span>
+      </a>
+      <a class="btn btn--ghost" href="buy.html"><span data-l="th">ดูรายละเอียดสินค้า</span><span data-l="en">See product details</span> <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ───────────── Footer ───────────── -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="foot__brand">
+        <a class="brand" href="index.html"><span class="brand__th">ขณะ</span><span class="brand__en">KHANA</span><span class="brand__spark" aria-hidden="true">✦</span></a>
+        <p class="foot__tag"><span data-l="th">น้ำผึ้งเดือน ๕ จากพะเยา เก็บปีละครั้ง ตามจังหวะของธรรมชาติ</span><span data-l="en">Month-five wild honey from Phayao — harvested once a year, to nature’s rhythm.</span></p>
+      </div>
+      <div class="foot__col">
+        <h4><span data-l="th">สำรวจ</span><span data-l="en">Explore</span></h4>
+        <a href="index.html"><span data-l="th">หน้าแรก</span><span data-l="en">Home</span></a>
+        <a href="story.html"><span data-l="th">เรื่องราว</span><span data-l="en">Story</span></a>
+        <a href="buy.html"><span data-l="th">สั่งซื้อ</span><span data-l="en">Shop</span></a>
+        <a href="faq.html"><span data-l="th">คำถามที่พบบ่อย</span><span data-l="en">FAQ</span></a>
+      </div>
+      <div class="foot__col">
+        <h4><span data-l="th">ติดต่อ</span><span data-l="en">Contact</span></h4>
+        <div class="foot__social">
+          <a href="https://lin.ee/WtDLn9H" target="_blank" rel="noopener noreferrer" aria-label="LINE">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.63V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook" data-soon="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94Z"/></svg>
+          </a>
+          <a href="#" aria-label="TikTok" data-soon="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82A4.3 4.3 0 0 1 15.4 3h-3.13v12.43a2.59 2.59 0 1 1-2.59-2.59c.27 0 .53.04.78.12v-3.2a5.73 5.73 0 0 0-.78-.05A5.72 5.72 0 1 0 15.4 15.4V9.01a7.34 7.34 0 0 0 4.3 1.38V7.26a4.28 4.28 0 0 1-3.1-1.44Z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram" data-soon="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+        <div class="foot__contact">
+          <p><span data-l="th">สั่งซื้อ · สอบถาม · ติดตามข่าวสาร</span><span data-l="en">Order · ask · follow along</span></p>
+          <p><span data-l="th">พะเยา · ล้านนา</span><span data-l="en">Phayao · Lanna, Thailand</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>© 2026 ขณะ · KHANA</span>
+      <span><span data-l="th">น้ำผึ้งเดือน ๕ · พะเยา</span><span data-l="en">Month-five honey · Phayao</span></span>
+    </div>
+  </div>
+</footer>
+
+<script src="khana.js"></script>
+<style id="__om-edit-overrides"></style>
+</body>
+</html>
