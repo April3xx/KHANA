@@ -30,8 +30,8 @@
   --gold-line:  rgba(216,176,91,0.34);
 
   /* Type */
-  --serif: 'Trirong', Georgia, 'Times New Roman', serif;
   --sans:  'IBM Plex Sans Thai', 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --sans-display: 'IBM Plex Sans Thai', 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   --script:'Charmonman', cursive;
 
   /* Rhythm */
@@ -87,7 +87,7 @@ a { color: inherit; text-decoration: none; }
 .kicker--light { color: var(--gold-soft); }
 
 h1, h2, h3 {
-  font-family: var(--serif);
+  font-family: var(--sans-display);
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -0.01em;
@@ -95,14 +95,14 @@ h1, h2, h3 {
 }
 
 .display {
-  font-family: var(--serif);
+  font-family: var(--sans-display);
   font-weight: 500;
   line-height: 0.98;
   letter-spacing: -0.02em;
 }
 
 .lede {
-  font-family: var(--serif);
+  font-family: var(--sans-display);
   font-weight: 300;
   font-size: clamp(20px, 2.8vw, 30px);
   line-height: 1.5;
@@ -161,11 +161,11 @@ em { font-style: italic; color: var(--honey); }
   text-decoration: none;
 }
 .brand__th {
-  font-family: var(--serif); font-weight: 500;
+  font-family: var(--sans-display); font-weight: 500;
   font-size: 24px; color: var(--green-head); line-height: 1;
 }
 .brand__en {
-  font-family: var(--serif); font-weight: 500;
+  font-family: var(--sans-display); font-weight: 500;
   font-size: 17px; letter-spacing: 0.16em; color: var(--green-head);
   text-transform: none; position: relative;
 }
@@ -251,13 +251,17 @@ html.lang-en [data-l="th"], html.lang-th [data-l="en"] { display: none !importan
 .tlink .arrow { transition: transform 0.25s ease; }
 .tlink:hover .arrow { transform: translateX(4px); }
 
-/* ───────────── Image slots / photos ───────────── */
-image-slot {
-  --slot-bg: linear-gradient(150deg, #E9D9B6, #DCC79A 55%, #CBB079);
-  background: var(--slot-bg);
-  color: var(--honey-deep);
-  display: block;
-}
+/* ───────────── Photos — the ONE sanctioned image pattern ─────────────
+   Usage:  <figure class="photo photo--wide">
+             <img src="images/…" alt="…" style="--pos:50% 60%">
+           </figure>
+   --pos = object-position (which part of the photo stays in frame).
+   Add loading="lazy" on images below the first screen. */
+.photo { overflow: hidden; border-radius: 20px; }
+.photo > img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 50%); }
+.photo--wide   { aspect-ratio: 16 / 7; }                     /* editorial banner (Home, Story) */
+.photo--tall   { aspect-ratio: 4 / 5; }                      /* product portrait (Buy) */
+.photo--square { aspect-ratio: 1 / 1; border-radius: 12px; } /* product thumbs */
 .photo-cap {
   font-family: var(--sans); font-size: 12px; font-weight: 500;
   letter-spacing: 0.04em; color: var(--ink-faint); margin-top: 12px;
@@ -287,6 +291,7 @@ image-slot {
 .rule { display: flex; align-items: center; gap: 16px; }
 .rule::before, .rule::after { content: ''; height: 1px; background: var(--hairline); flex: 1; }
 .rule__mark { color: var(--honey); flex: 0 0 auto; display: inline-flex; }
+.rule--center { width: min(240px, 55%); margin-inline: auto; }
 
 /* ───────────── Footer ───────────── */
 .foot { background: var(--forest); color: var(--paper); padding-block: clamp(48px, 7vw, 80px); }
@@ -441,7 +446,7 @@ html.lang-en .hero__word { font-size: clamp(60px, 16vw, 188px); letter-spacing: 
 }
 .ribbon__spark { color: var(--gold); font-size: 0.7em; vertical-align: 0.18em; margin-inline: 0.7em; opacity: 0.9; }
 .ribbon__text {
-  font-family: var(--serif); font-weight: 400; font-style: italic;
+  font-family: var(--sans-display); font-weight: 600; font-style: normal; letter-spacing: -0.015em;
   font-size: clamp(18px, 2.6vw, 30px);
   letter-spacing: 0.01em; color: var(--gold-soft);
 }
@@ -476,7 +481,7 @@ html.lang-en .ribbon__text { font-style: italic; text-transform: uppercase; lett
   padding-block: clamp(26px, 3.6vw, 42px); border-top: 1px solid var(--hairline);
 }
 .diff__item:last-child { border-bottom: 1px solid var(--hairline); }
-.diff__num { font-family: var(--serif); font-weight: 400; font-size: clamp(22px, 2.4vw, 32px); color: var(--honey); line-height: 1; padding-top: 4px; }
+.diff__num { font-family: var(--sans-display); font-weight: 600; letter-spacing: -0.01em; font-size: clamp(22px, 2.4vw, 32px); color: var(--honey); line-height: 1; padding-top: 4px; }
 .diff__body h3 { font-size: clamp(20px, 2.2vw, 28px); font-weight: 500; }
 .diff__en { color: var(--ink-faint); font-size: 13px; letter-spacing: 0.03em; margin-top: 5px; }
 .diff__text { margin-top: 13px; max-width: 50ch; color: var(--ink-soft); font-size: clamp(15px, 1.4vw, 16.5px); }
@@ -562,14 +567,50 @@ html.lang-en .ribbon__text { font-style: italic; text-transform: uppercase; lett
   padding-top: clamp(20px, 4vw, 44px);
 }
 .product__media { position: sticky; top: calc(var(--nav-h) + 28px); }
-.product__media > image-slot { width: 100%; aspect-ratio: 4 / 5; }
-.product__thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
-.product__thumbs image-slot { width: 100%; aspect-ratio: 1; }
+.product__media .photo { width: 100%; }
+/* Thumb grid — holds .photo--square figures (real photos) or .photo-ph--square (placeholders) */
+.product__thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(8px, 1.4vw, 12px); margin-top: clamp(8px, 1.4vw, 12px); }
+
+/* Empty photo placeholders — swap for <figure class="photo …"><img> when real photos exist */
+.photo-ph {
+  width: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px; text-align: center;
+  background: var(--paper-deep);
+  border: 1px dashed var(--gold-line);
+  border-radius: 20px;
+  color: var(--ink-faint);
+  padding: 16px;
+}
+.photo-ph--tall   { aspect-ratio: 4 / 5; }
+.photo-ph--square { aspect-ratio: 1 / 1; border-radius: 12px; gap: 0; padding: 8px; }
+.photo-ph__icon   { color: var(--honey); opacity: 0.7; }
+.photo-ph__label  { font-family: var(--sans); font-size: 13px; letter-spacing: 0.02em; line-height: 1.4; }
+.photo-ph--square .photo-ph__label { font-size: clamp(10px, 1.4vw, 12px); }
+
+/* Two-SKU price block */
+.product__skus { margin-top: clamp(24px, 3vw, 32px); display: grid; gap: 10px; }
+.product__sku {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  padding: 14px 18px;
+  background: var(--cream-hi);
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+}
+.product__sku-size { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.product__sku-vol  { font-family: var(--sans-display); font-weight: 600; letter-spacing: -0.01em; font-size: clamp(19px, 2.2vw, 24px); color: var(--green-head); line-height: 1; }
+.product__sku-kind { font-size: 13px; color: var(--ink-faint); letter-spacing: 0.02em; }
+.product__sku-amt  { font-family: var(--sans-display); font-weight: 600; letter-spacing: -0.01em; font-size: clamp(22px, 2.6vw, 30px); color: var(--honey); line-height: 1; }
+.product__pricenote {
+  margin-top: 12px; padding-bottom: clamp(20px, 3vw, 28px);
+  border-bottom: 1px solid var(--hairline);
+  font-size: 13px; color: var(--ink-soft); line-height: 1.6; max-width: 44ch;
+}
 
 .product__name { font-size: clamp(38px, 5.2vw, 68px); margin-top: 14px; color: var(--green-head); }
 .product__sub { margin-top: 18px; font-size: clamp(15px, 1.6vw, 18px); max-width: 40ch; }
 .product__price { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-top: clamp(24px, 3vw, 32px); padding-bottom: clamp(24px, 3vw, 30px); border-bottom: 1px solid var(--hairline); }
-.product__amt { font-family: var(--serif); font-size: clamp(30px, 4vw, 44px); color: var(--honey); line-height: 1; }
+.product__amt { font-family: var(--sans-display); font-weight: 600; letter-spacing: -0.01em; font-size: clamp(30px, 4vw, 44px); color: var(--honey); line-height: 1; }
 .product__unit { font-size: 14px; color: var(--ink-soft); }
 .product__facts { list-style: none; margin-top: clamp(22px, 3vw, 28px); }
 .product__facts li { display: flex; justify-content: space-between; gap: 20px; padding-block: 13px; border-bottom: 1px solid var(--hairline-2); font-size: clamp(14px, 1.4vw, 15.5px); }
@@ -582,7 +623,7 @@ html.lang-en .ribbon__text { font-style: italic; text-transform: uppercase; lett
 .avail__inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
 .avail__dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 0 rgba(216,174,84,0.6); animation: avpulse 2.4s infinite; }
 @keyframes avpulse { 0%{box-shadow:0 0 0 0 rgba(216,174,84,0.5);} 70%{box-shadow:0 0 0 12px rgba(216,174,84,0);} 100%{box-shadow:0 0 0 0 rgba(216,174,84,0);} }
-.avail__th { font-family: var(--serif); font-size: clamp(22px, 3vw, 32px); color: var(--cream-hi); }
+.avail__th { font-family: var(--sans-display); font-size: clamp(22px, 3vw, 32px); color: var(--cream-hi); }
 .avail__en { max-width: 50ch; font-size: clamp(14px, 1.5vw, 16px); color: color-mix(in srgb, var(--paper) 72%, transparent); }
 
 /* What's in the jar */
@@ -590,28 +631,28 @@ html.lang-en .ribbon__text { font-style: italic; text-transform: uppercase; lett
 .jar__title { font-size: clamp(30px, 4.4vw, 54px); margin-top: 16px; }
 .jar__grid { margin-top: clamp(36px, 5vw, 60px); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 36px); }
 .jar__item { padding-top: 24px; border-top: 2px solid var(--gold-line); }
-.jar__num { font-family: var(--serif); font-size: clamp(22px, 2.4vw, 30px); color: var(--honey); }
+.jar__num { font-family: var(--sans-display); font-weight: 600; letter-spacing: -0.01em; font-size: clamp(22px, 2.4vw, 30px); color: var(--honey); }
 .jar__item h3 { font-size: clamp(19px, 2vw, 24px); margin-top: 12px; font-weight: 500; }
 .jar__item p { margin-top: 12px; font-size: clamp(14px, 1.4vw, 16px); color: var(--ink-soft); line-height: 1.8; }
 
 /* How to order */
 .how__grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
 .how__head { position: sticky; top: calc(var(--nav-h) + 28px); }
-.how__title { font-family: var(--serif); font-weight: 500; font-size: clamp(26px, 3.2vw, 40px); margin-top: 16px; line-height: 1.12; }
+.how__title { font-family: var(--sans-display); font-weight: 500; font-size: clamp(26px, 3.2vw, 40px); margin-top: 16px; line-height: 1.12; }
 .how__btn { margin-top: 28px; }
 .how__steps { list-style: none; }
 .how__step { display: grid; grid-template-columns: auto 1fr; gap: clamp(16px, 3vw, 28px); padding-block: clamp(22px, 3vw, 32px); border-top: 1px solid var(--hairline); align-items: start; }
 .how__step:last-child { border-bottom: 1px solid var(--hairline); }
-.how__stepnum { width: 46px; height: 46px; flex: 0 0 auto; border-radius: 50%; border: 1.5px solid var(--gold-line); display: grid; place-items: center; font-family: var(--serif); font-size: 22px; color: var(--honey); }
-.how__step h4 { font-family: var(--serif); font-weight: 500; font-size: clamp(18px, 2vw, 23px); }
+.how__stepnum { width: 46px; height: 46px; flex: 0 0 auto; border-radius: 50%; border: 1.5px solid var(--gold-line); display: grid; place-items: center; font-family: var(--sans-display); font-weight: 600; font-size: 22px; color: var(--honey); }
+.how__step h4 { font-family: var(--sans-display); font-weight: 600; letter-spacing: -0.01em; font-size: clamp(18px, 2vw, 23px); }
 .how__steptext { margin-top: 8px; font-size: clamp(14px, 1.4vw, 16px); color: var(--ink-soft); line-height: 1.7; }
 
 /* FAQ */
 .faq__inner { max-width: 760px; margin-inline: auto; }
-.faq__title { font-family: var(--serif); font-weight: 500; font-size: clamp(28px, 4vw, 44px); text-align: center; margin-bottom: clamp(24px, 4vw, 40px); }
+.faq__title { font-family: var(--sans-display); font-weight: 600; letter-spacing: -0.015em; font-size: clamp(28px, 4vw, 44px); text-align: center; margin-bottom: clamp(24px, 4vw, 40px); }
 .faq__item { border-top: 1px solid var(--hairline); }
 .faq__item:last-child { border-bottom: 1px solid var(--hairline); }
-.faq__item summary { cursor: pointer; list-style: none; padding-block: 22px; font-family: var(--serif); font-size: clamp(18px, 2vw, 23px); color: var(--ink); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.faq__item summary { cursor: pointer; list-style: none; padding-block: 22px; font-family: var(--sans-display); font-size: clamp(18px, 2vw, 23px); color: var(--ink); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .faq__item summary::-webkit-details-marker { display: none; }
 .faq__item summary::after { content: '+'; font-family: var(--sans); font-weight: 300; font-size: 26px; color: var(--honey); transition: transform 0.3s ease; flex: 0 0 auto; }
 .faq__item[open] summary::after { transform: rotate(45deg); }
@@ -630,7 +671,7 @@ html.lang-en .ribbon__text { font-style: italic; text-transform: uppercase; lett
 
 /* FAQ teaser on Buy */
 .faqcta__inner { text-align: center; max-width: 640px; margin-inline: auto; }
-.faqcta__title { font-family: var(--serif); font-weight: 500; font-size: clamp(26px, 3.6vw, 42px); margin-top: 22px; color: var(--ink); }
+.faqcta__title { font-family: var(--sans-display); font-weight: 500; font-size: clamp(26px, 3.6vw, 42px); margin-top: 22px; color: var(--ink); }
 .faqcta__text { margin-top: 14px; font-size: clamp(15px, 1.6vw, 18px); color: var(--ink-soft); max-width: 46ch; margin-inline: auto; }
 .faqcta__inner .btn { margin-top: 28px; }
 
@@ -649,67 +690,26 @@ html.lang-en .ribbon__text { font-style: italic; text-transform: uppercase; lett
 }
 
 /* ════════════════════════════════════════════════════════════
-   TWEAKABLE FEEL CONTROLS — driven by data-* on <html>
-   Defaults (no attribute) == warmth:natural · mood:balanced · voice:serif
-   ════════════════════════════════════════════════════════════ */
+   NOTE: The old data-warmth / data-mood / data-voice "tweaks" system
+   was removed 2026-07 after the founder locked the design:
+   serif editorial voice · default paper warmth · balanced green.
+   Do not reintroduce data-* feel attributes — see CLAUDE.md.
+   (The removed CSS lives in git history if ever needed.)
+   ════════════════════════════════════════════════════════════ */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 
-/* Section panels and headings switch instantly between tweak states —
-   no background/color transitions (avoids frozen-clock half-states & flashes). */
-
-/* ── WARMTH: paper tone + grain (Apple-crisp ⇄ handmade) ── */
-html[data-warmth="crisp"]   { --paper:#F8F6F0; --paper-deep:#EFEEE6; --cream-hi:#FFFFFF; }
-html[data-warmth="crisp"]   body::after { opacity: 0; }
-html[data-warmth="crafted"] { --paper:#F1E7D2; --paper-deep:#E7DAC0; --cream-hi:#FAF4E8; }
-html[data-warmth="crafted"] body::after { opacity: 0.78; }
-
-/* ── GREEN PRESENCE: how far the brand green takes over ── */
-/* Airy — green recedes: headings soften, ribbon becomes an airy gold rule */
-html[data-mood="airy"] { --green-head:#2E4A3C; }
-html[data-mood="airy"] .ribbon {
-  background: transparent;
-  border-top: 1px solid var(--gold-line);
-  border-bottom: 1px solid var(--gold-line);
-}
-html[data-mood="airy"] .ribbon__text { color: var(--honey); }
-html[data-mood="airy"] .ribbon__spark { color: var(--honey); }
-
-/* Deep — green dominates: meaning + teaser become forest panels */
-html[data-mood="deep"] .meaning,
-html[data-mood="deep"] .teaser {
-  background: var(--forest); color: var(--paper);
-  position: relative; overflow: hidden;
-}
-html[data-mood="deep"] .meaning::before,
-html[data-mood="deep"] .teaser::before {
-  content: ''; position: absolute; pointer-events: none; z-index: 0;
-  width: 70vw; max-width: 760px; aspect-ratio: 1; top: -25%; right: -12%;
-  background: radial-gradient(circle, rgba(216,176,91,0.14), transparent 60%);
-}
-html[data-mood="deep"] .meaning > *,
-html[data-mood="deep"] .teaser > * { position: relative; z-index: 1; }
-html[data-mood="deep"] .meaning .kicker,
-html[data-mood="deep"] .teaser .kicker { color: var(--gold-soft); }
-html[data-mood="deep"] .meaning__statement { color: var(--cream-hi); }
-html[data-mood="deep"] .meaning__statement em,
-html[data-mood="deep"] .teaser__quote em { color: var(--gold-soft); }
-html[data-mood="deep"] .meaning__en { color: color-mix(in srgb, var(--paper) 88%, transparent); }
-html[data-mood="deep"] .meaning__en strong { color: var(--cream-hi); }
-html[data-mood="deep"] .teaser__quote { color: var(--cream-hi); }
-html[data-mood="deep"] .teaser__en { color: color-mix(in srgb, var(--paper) 82%, transparent); }
-html[data-mood="deep"] .teaser__en em { color: var(--gold-soft); }
-html[data-mood="deep"] .teaser .tlink { color: var(--gold-soft); }
-
-/* ── HEADLINE VOICE: editorial serif ⇄ modern sans ── */
-html[data-voice="modern"] :is(h1,h2,h3,.display,.hero__word,.lede,
-  .meaning__statement,.prose__h,.faq__item summary,.brand__th,.brand__en,
-  .how__title,.faqcta__title,.avail__th) {
-  font-family: var(--sans);
+/* == TYPOGRAPHY: one sans family (IBM Plex Sans Thai), headers vs body differentiated ==
+   IBM Plex Sans Thai is used everywhere — English and Thai, every device. Apple-style
+   hierarchy comes from WEIGHT + TRACKING (not a second font): headings 600 + tight
+   tracking + line-height 1.1; body stays regular + open leading. */
+:is(h1, h2, h3, .display, .hero__word, .lede, .meaning__statement, .prose__h,
+  .faq__item summary, .brand__th, .brand__en, .how__title, .faqcta__title,
+  .avail__th, .jar__title, .story-head__title, .faq-head__title, .product__name,
+  .cta__title, .why__title, .diff__title) {
+  font-family: var(--sans-display);
   font-weight: 600;
-  letter-spacing: -0.022em;
+  letter-spacing: -0.021em;
+  line-height: 1.1;
 }
-html[data-voice="modern"] :is(.lede,.meaning__statement) { font-weight: 500; }
-html[data-voice="modern"] .ribbon__text { font-family: var(--sans); font-style: normal; font-weight: 600; }
-html[data-voice="modern"] em { font-style: normal; }
-
-/* Tweaks mount must never disturb layout when empty */
-#khana-tweaks-root:empty { display: none; }
+.hero__word { line-height: 0.9; }
+:is(.lede, .meaning__statement) { font-weight: 500; letter-spacing: -0.012em; line-height: 1.35; }
+.display em, h1 em, h2 em, h3 em { font-style: normal; }

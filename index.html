@@ -7,10 +7,9 @@
 <meta name="description" content="ขณะ · KHANA — น้ำผึ้งเดือน ๕ จากพะเยา เก็บปีละครั้ง ตามจังหวะของธรรมชาติ">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Trirong:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Charmonman:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="khana.css?v=7">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Charmonman:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="khana.css?v=13">
 <script>(function(){try{var l=localStorage.getItem('khana-lang')||'th';document.documentElement.classList.add('lang-'+l);document.documentElement.lang=l;}catch(e){document.documentElement.classList.add('lang-th');}if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' pre';}})();</script>
-<script src="image-slot.js"></script>
 </head>
 <body>
 
@@ -73,9 +72,9 @@
 
   <!-- Cinematic photo band -->
   <div class="wrap hero__media reveal d3">
-    <div style="aspect-ratio:16/7; overflow:hidden; border-radius:20px;">
-  <img src="images/IMG_3196.jpg" alt="Phayao at dawn"
-       style="width:100%; height:100%; object-fit:cover; object-position:50% 60%;"></div>
+    <figure class="photo photo--wide">
+      <img src="images/IMG_3196.jpg" alt="Morning mist over the mountains of Phayao at dawn" style="--pos:50% 60%">
+    </figure>
     <p class="photo-cap"><span data-l="th">พะเยา ยามเช้า · สายหมอกและแสงแรกของวัน</span><span data-l="en">Phayao at dawn · first light through the mist</span></p>
   </div>
 </section>
@@ -161,9 +160,9 @@
 <section class="section teaser">
   <div class="wrap teaser__grid">
     <div class="teaser__media reveal">
-      <div style="aspect-ratio:16/7; overflow:hidden; border-radius:20px;">
-  <img src="images/IMG_9655.jpg" alt="Phayao at dawn"
-       style="width:100%; height:100%; object-fit:cover; object-position:50% 80%;"> </div>
+      <figure class="photo photo--wide">
+        <img src="images/IMG_9655.jpg" alt="Rice fields on the road into the village in Phayao" style="--pos:50% 80%" loading="lazy">
+      </figure>
     </div>
     <div class="teaser__text reveal d1">
       <p class="kicker"><span data-l="th">เรื่องราวของเรา</span><span data-l="en">Our story</span></p>
@@ -177,7 +176,7 @@
 <!-- ───────────── Order CTA ───────────── -->
 <section class="section--tight cta">
   <div class="wrap cta__inner reveal">
-    <div class="rule" style="width:min(260px,60%);margin-inline:auto;">
+    <div class="rule rule--center">
       <span class="rule__mark">
         <svg width="22" height="14" viewBox="0 0 22 14" fill="none" aria-hidden="true"><path d="M11 1c1.9 2.4 2.9 4.3 2.9 6A2.9 2.9 0 1 1 8.1 7c0-1.7 1-3.6 2.9-6Z" fill="#B5760F"/></svg>
       </span>
@@ -243,56 +242,6 @@
 </footer>
 
 <script src="khana.js"></script>
-
-<!-- ───────────── Tweaks panel (React, mounts only when activated) ───────────── -->
-<div id="khana-tweaks-root"></div>
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel">
-const KHANA_TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "mood": "balanced",
-  "warmth": "crafted",
-  "voice": "modern"
-}/*EDITMODE-END*/;
-
-function KhanaTweaks() {
-  const [t, setTweak] = useTweaks(KHANA_TWEAK_DEFAULTS);
-
-  React.useEffect(() => {
-    const el = document.documentElement;
-    el.setAttribute('data-mood', t.mood);
-    el.setAttribute('data-warmth', t.warmth);
-    el.setAttribute('data-voice', t.voice);
-  }, [t.mood, t.warmth, t.voice]);
-
-  return (
-    <TweaksPanel title="Tweaks">
-      <TweakSection label="Green presence"
-        hint="How far the brand green takes over the page." />
-      <TweakRadio value={t.mood}
-        options={['airy', 'balanced', 'deep']}
-        onChange={(v) => setTweak('mood', v)} />
-
-      <TweakSection label="Warmth"
-        hint="Paper tone &amp; grain — crisp like Apple, or handmade." />
-      <TweakRadio value={t.warmth}
-        options={['crisp', 'natural', 'crafted']}
-        onChange={(v) => setTweak('warmth', v)} />
-
-      <TweakSection label="Headline voice"
-        hint="Editorial serif or clean modern sans." />
-      <TweakRadio value={t.voice}
-        options={['serif', 'modern']}
-        onChange={(v) => setTweak('voice', v)} />
-    </TweaksPanel>
-  );
-}
-
-ReactDOM.createRoot(document.getElementById('khana-tweaks-root')).render(<KhanaTweaks />);
-</script>
-
-<style id="__om-edit-overrides"></style>
 </body>
 </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
